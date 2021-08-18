@@ -3,46 +3,66 @@
 @section('content')
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Category list</h1>
+        <h1 class="mt-4">Post list</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
             <li class="breadcrumb-item active">Static Navigation</li>
         </ol>
         <div class="card mb-4">
             <div class="card-body">
-                <a class="btn btn-primary" href="{!! url('category/create') !!}">Create category</a>
-                @if(Session::has('category_update'))
-                <div class="alert alert-success"><em>{!! session('category_update') !!}</em>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times</span></button>
-                </div>
+
+                @if(Session::has('post_delete'))
+                <p>{!! session('post_delete') !!}</p>
                 @endif
-                @if (count($categories) > 0)
-                <table class="table">
+                <a class="btn btn-primary" href="{!! url('post/create') !!}">Create new</a>
+                @if (count($posts) > 0)
+                <table class="table table-striped task-table">
                     <thead>
-                        <th>ID</th>
-                        <th>Category Name</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Description</th>
                         <th>Edit</th>
                         <th>Delete</th>
+
                     </thead>
+
                     <tbody>
-                        @foreach ($categories as $category)
+                        @foreach ($posts as $post)
                         <tr>
                             <td>
-                                <div>{!! $category->id !!}</div>
+                                <div>{!! $post->title !!}</div>
                             </td>
                             <td>
-                                <div>{!! $category->name !!}</div>
+                                <div>{!! $post->author !!}</div>
                             </td>
-                            <td><a href="{!! url('category/' . $category->id . '/edit') !!}">Edit</a></td>
                             <td>
-                                {!! Form::open(array('url'=>'category/'. $category->id, 'method'=>'DELETE')) !!}
+                                <div>{!! $post->name !!}</div>
+
+                            </td>
+                            <td>
+                                <div>{!! Html::image("/img/posts/".$post->image, $post->title, array('width'=>'60')) !!}</div>
+                            </td>
+                            <td>
+                                <div>{!! $post->short_desc !!}</div>
+                            </td>
+
+                            <td><a href="{!! url('post/' . $post->id . '/edit') !!}">Edit</a></td>
+
+                            <td>
+                                {!! Form::open(array('url'=>'post/'. $post->id, 'method'=>'DELETE')) !!}
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <button class="btn btn-danger delete">Delete</button>
                                 {!! Form::close() !!}
+
                             </td>
+
                         </tr>
+
                         @endforeach
+
                     </tbody>
                 </table>
                 <script>
@@ -76,14 +96,12 @@
                     });
                 </script>
                 @endif
-                @if(Session::has('category_delete'))
-            <div class="alert alert-success"><em>{!! session('category_delete') !!}</em>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times</span></button>    
-            </div>
-            @endif
             </div>
         </div>
         <div style="height: 100vh"></div>
+        <div class="card mb-4">
+            <div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div>
+        </div>
     </div>
 </main>
 @endsection

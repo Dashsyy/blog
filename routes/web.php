@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,18 +26,19 @@ Route::get('/category/create',[CategoryController::class,'create']);
 Route::post('/category',[CategoryController::class,'store']);
 
 
-//route to category
+//route for category
 Route::get('/category', [CategoryController::class,'index']);
 Route::get('/category/{id}/edit',[CategoryController::class,'edit'])->name('category.edit');
 Route::put('/category/{id}',[CategoryController::class,'update'])->name('category.update');
 Route::delete('/category/{id}',[CategoryController::class,'delete'])->name('category.destroy');
 
-//StackOver
-// Route::get('/post','PostController@index')->name('post.index');
-//     Route::get('/post/create','PostController@create')->name('post.create');
-//     Route::post('/post','PostController@store')->name('post.store');
-//     Route::get('/post/{post}','PostController@show')->name('post.show');
-    Route::delete('/post/{post}','PostController@destroy')->name('post.destroy');
-//     Route::get('/post/{post}/edit','PostController@edit')->name('post.edit');
-//     Route::put('/post/{post}','PostController@update')->name('post.update');
-//     Route::resource('category', 'CategoryController');
+//route for Post
+Route::resource('/post', 'PostController');
+
+//auth 
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('dashboard', [AuthController::class, 'dashboard']);
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');

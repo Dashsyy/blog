@@ -64,8 +64,8 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $categories = Category::find($id);
-        $categories->delete();
-        Session::flash('category_delete', 'Category is Delete');
-        return redirect('category');
+    	$categories->delete();
+    	Session::flash('category_delete','Category is Delete');
+    	return redirect('category');
     }
 }
